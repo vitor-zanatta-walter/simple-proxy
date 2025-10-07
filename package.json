@@ -1,0 +1,19 @@
+{
+  "name": "proxy",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Proxy para desenvolvimento do projeto meu peão",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --no-deprecation app.js"
+  },
+  "author": "vitor zanatta walter",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "http-proxy": "^1.18.1",
+    "http-proxy-middleware": "^3.0.5"
+  }
+}

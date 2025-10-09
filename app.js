@@ -6,6 +6,7 @@ dotenv.config();
 const app = express();
 const API_ADDRESS = process.env.API_ADDRESS;
 const FRONTEND_ADDRESS = process.env.FRONTEND_ADDRESS;
+const LISTEN_PORT = process.env.LISTEN_PORT;
 
 app.use((req, res, next) => {
 
@@ -24,6 +25,6 @@ app.use((req, res, next) => {
     }
 });
 
-app.listen(8080, () => {
-    console.log("Proxy rodando na porta 8080");
+app.listen(LISTEN_PORT, () => {
+    console.log(`Proxy rodando na porta ${LISTEN_PORT}`);
 });

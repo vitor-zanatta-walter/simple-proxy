@@ -10,6 +10,7 @@ const app = express();
 
 // carregar environment variables
 const API_ADDRESS = process.env.API_ADDRESS;
+const API_PATH = process.env.API_PATH;
 const FRONTEND_ADDRESS = process.env.FRONTEND_ADDRESS;
 const LISTEN_PORT = process.env.LISTEN_PORT;
 const USE_HTTPS = (process.env.USE_HTTPS === "true");
@@ -29,7 +30,7 @@ const frontend_proxy = createProxyMiddleware({target: FRONTEND_ADDRESS, changeOr
 
 app.use((req, res, next) => {
 
-    if (req.path.startsWith("/api")) {
+    if (req.path.startsWith(API_PATH)) {
         console.log(`[Proxy] ${req.method} ${req.url} -> ${API_ADDRESS}${req.url}`);
         api_proxy(req, res, next);
     } else {
@@ -41,9 +42,14 @@ app.use((req, res, next) => {
 
 // Inicia o servidor (http ou https)
 if (USE_HTTPS) {
-    
+
+    if (!HTTPS_KEY || HTTPS_KEY == "" || !HTTPS_CERT || HTTPS_CERT == "") {
+        console.error("HTTPS_KEY ou HTTPS_CERT não foram configurados no arquivo .env");
+        process.exit(1);
+    }
+
     https.createServer(options, app).listen(LISTEN_PORT, () => {
-        console.log(`Proxy rodando na porta ${LISTEN_PORT}`);
+        console.log(`Proxy rodando em https na porta ${LISTEN_PORT}`);
     });
     
     http.createServer((req, res) => {
